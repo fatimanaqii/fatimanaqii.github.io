@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatima Naqi - Portfolio</title>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Configure Tailwind to use Inter font
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Small style enhancement for list bullets */
+        .content-section ul li {
+            position: relative;
+            padding-left: 1.75rem; /* 28px */
+        }
+        .content-section ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem; /* 8px */
+            color: #4b5563; /* text-gray-600 */
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans text-gray-800 antialiased">
+
+    <!-- Main Container -->
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+
+        <!-- Header Section -->
+        <header class="mb-10 p-8 bg-white shadow-lg rounded-xl border border-gray-200">
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-2">Fatima Naqi</h1>
+            <p class="text-xl sm:text-2xl text-blue-700 font-medium mb-6">Aspiring Journalist</p>
+            
+            <!-- Contact Info -->
+            <div class="flex flex-wrap gap-x-6 gap-y-3 text-gray-600">
+                <div class="flex items-center">
+                    <!-- Location Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                    </svg>
+                    <span>Lincoln, NE</span>
+                </div>
+                <div class="flex items-center">
+                    <!-- Phone Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.06-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2.153a1 1 0 01-.986-.836l-.74-4.435a1 1 0 01.54-1.06l1.548-.773a11.037 11.037 0 00-6.105-6.105l-.773 1.548a1 1 0 01-1.06.54l-4.435-.74A1 1 0 013 3H2z" />
+                    </svg>
+                    <a href="tel:402-804-9714" class="hover:text-blue-600 hover:underline">402-804-9714</a>
+                </div>
+                <div class="flex items-center">
+                    <!-- Email Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 10.884l7.997-5H2.003zM18 7.116l-8 5-8-5V14a2 2 0 002 2h12a2 2 0 002-2V7.116z" />
+                    </svg>
+                    <a href="mailto:fatimanaqi07@gmail.com" class="hover:text-blue-600 hover:underline">fatimanaqi07@gmail.com</a>
+                </div>
+                <div class="flex items-center">
+                    <!-- LinkedIn Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                    <a href="https://linkedin.com/in/fatima-a-naqi-b3945b208/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 hover:underline">LinkedIn Profile</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Column (Experience) -->
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- Work Experience Section -->
+                <section class="content-section bg-white shadow-lg rounded-xl border border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 p-6 border-b border-gray-200">Work Experience</h2>
+                    <div class="p-6 space-y-8">
+
+                        <!-- Job 1 -->
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">News Intern</h3>
+                            <p class="text-lg font-medium text-gray-700">Nebraska Public Media, Lincoln, NE</p>
+                            <p class="text-sm text-gray-500 mb-4">March 2024 - Present</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>Researching, reporting, editing and writing news stories relevant to Nebraska State.</li>
+                                <li>Shadowed reporters in the field during interviews, press conferences and live events.</li>
+                                <li>Gained hands-on experience with newsroom software and digital tools for reporting and editing.</li>
+                            </ul>
+                        </div>
+                        
+                        <hr class="border-gray-200">
+
+                        <!-- Job 2 -->
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Monitoring and Evaluation Assistant</h3>
+                            <p class="text-lg font-medium text-gray-700">Nai Supporting Open Media in Afghanistan, Kabul, Afghanistan</p>
+                            <p class="text-sm text-gray-500 mb-4">Feb 2019 - March 2021</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>Assisted with the Rasana project team, partners and grantees on M&E data collection.</li>
+                                <li>Collected and analyzed data to assess progress towards project targets and focus on grants.</li>
+                                <li>Assisted with writing bi-weekly and quarterly reports, conducting presentations, and developing statistics on project performance over time.</li>
+                                <li>Assisted M&E Manager in creating a framework and procedures for the monitoring and evaluation of project activities.</li>
+                                <li>Helped the M&E Manager to ensure that donors, partners, and senior management data queries are addressed in an accurate and timely manner.</li>
+                                <li>Managed data gathering and processed throughout the project by donor agencies.</li>
+                            </ul>
+                        </div>
+                        
+                        <hr class="border-gray-200">
+
+                        <!-- Job 3 -->
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800">Project Assistant</h3>
+                            <p class="text-lg font-medium text-gray-700">Nai Supporting Open Media in Afghanistan, Kabul, Afghanistan</p>
+                            <p class="text-sm text-gray-500 mb-4">Sep 2018 - Jan 2019</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li>Assisted the project manager in delivering project objectives.</li>
+                                <li>Assist the project manager in writing proposals for new grants and RFPs.</li>
+                                <li>Drafted project strategies, work plans and identified the possible challenges and brought them promptly to the organization's attention with proposed solutions.</li>
+                                <li>Managed the planning and execution of external events such as workshops, media related training and conferences.</li>
+                                <li>Provided timely and accurate inputs to the M&E and Reports Officer for all donor reports.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column (Education, Skills, Awards) -->
+            <div class="lg:col-span-1 space-y-8">
+
+                <!-- Education Section -->
+                <section class="content-section bg-white shadow-lg rounded-xl border border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 p-6 border-b border-gray-200">Education</h2>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800">University of Nebraska-Lincoln</h3>
+                        <p class="text-lg font-medium text-gray-700">Bachelor of Journalism</p>
+                        <p class="text-sm text-gray-500 mb-3">Anticipated Dec 2025 | GPA: 3.5</p>
+                        <p class="text-gray-700"><strong>Major:</strong> Journalism</p>
+                        <p class="text-gray-700"><strong>Minors:</strong> Human Rights & Humanitarian Affairs and Political Science</p>
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section class="content-section bg-white shadow-lg rounded-xl border border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 p-6 border-b border-gray-200">Skills</h2>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Adobe</h4>
+                            <p class="text-gray-700">Audition, Premiere Rush</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Languages</h4>
+                            <p class="text-gray-700">Persian, Pashto, Urdu, English</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Other</h4>
+                            <p class="text-gray-700">AP Style, Multimedia Storytelling</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Awards Section -->
+                <section class="content-section bg-white shadow-lg rounded-xl border border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 p-6 border-b border-gray-200">Awards</h2>
+                    <div class="p-6">
+                        <ul class="space-y-3 text-gray-700">
+                            <li>Dean's List, University of Nebraska-Lincoln, Spring 2024</li>
+                            <li>President's Honor Award, American University of Afghanistan, Spring 2022</li>
+                            <li>President's Honor Award, American University of Afghanistan, Fall 2021</li>
+                        </ul>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
