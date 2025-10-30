@@ -3,388 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Nebraskan News Quiz</title>
+    <title>Husker Hall Havoc</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
     <style>
-        /* A simple style for the answer buttons */
-        .answer-btn {
-            @apply w-full bg-white border border-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-sm transition-all duration-200 ease-in-out;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        .answer-btn:hover {
-            @apply bg-gray-100 border-gray-400;
+        /* Custom styles for stat bars */
+        .stat-bar {
+            background-color: #e0e0e0;
+            border-radius: 9999px;
+            overflow: hidden;
+            height: 24px;
+            border: 2px solid #555;
         }
-        .answer-btn:focus {
-            @apply ring-2 ring-red-300 outline-none;
+        .stat-bar-inner {
+            height: 100%;
+            transition: width 0.3s ease-in-out;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.875rem;
+            line-height: 20px;
+        }
+        /* Modal styles */
+        .modal {
+            transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
         }
     </style>
 </head>
-<body class="bg-gray-100 font-sans antialiased">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
 
-    <div class="container mx-auto max-w-2xl min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden">
         
-        <div class="w-full bg-white rounded-xl shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <header class="bg-red-700 p-4 text-white">
+            <h1 class="text-2xl font-bold text-center">Husker Hall Havoc</h1>
+            <p class="text-center text-red-100">Can you survive freshman year?</p>
+        </header>
+
+        <!-- Stats Section -->
+        <section id="stats-container" class="p-4 md:p-6 border-b border-gray-200">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Grades Stat -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Grades 📚</label>
+                    <div class="stat-bar">
+                        <div id="grades-bar" class="stat-bar-inner bg-blue-600">5/10</div>
+                    </div>
+                </div>
+                <!-- Social Stat -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Social 🤝</label>
+                    <div class="stat-bar">
+                        <div id="social-bar" class="stat-bar-inner bg-green-600">5/10</div>
+                    </div>
+                </div>
+                <!-- Stress Stat -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Stress 😰</label>
+                    <div class="stat-bar">
+                        <div id="stress-bar" class="stat-bar-inner bg-yellow-500">0/10</div>
+                    </div>
+                </div>
+                <!-- Money Stat -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Money 💰</label>
+                    <div class="stat-bar">
+                        <div id="money-bar" class="stat-bar-inner bg-red-600">$5</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Area -->
+        <main id="game-area" class="p-4 md:p-6">
+            <!-- Scenario Image -->
+            <img id="scenario-image" src="https://placehold.co/600x300/c5191e/ffffff?text=Welcome+to+UNL!" alt="Scenario image" class="w-full h-48 md:h-64 object-cover rounded-lg shadow-md mb-4">
             
-            <!-- Header -->
-            <div class="bg-red-700 p-6">
-                <h1 class="text-3xl md:text-4xl font-bold text-white text-center">
-                    Daily Nebraskan News Quiz
-                </h1>
-                <p class="text-red-100 text-center text-lg mt-1">Based on the Northwestern Game</p>
-            </div>
+            <!-- Scenario Text -->
+            <p id="scenario-text" class="text-gray-800 text-lg mb-6 min-h-[100px]">
+                Welcome to your first year at UNL! Try to make it through the semester by balancing your stats. If your Grades, Social, or Money hit 0, or your Stress hits 10, you'll be on academic probation. Good luck!
+            </p>
 
-            <!-- Start Screen -->
-            <div id="start-screen" class="p-8 md:p-12 text-center">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Ready to test your knowledge?</h2>
-                <p class="text-gray-600 mb-8">
-                    You'll be given 5 random questions about the recent Husker victory. Good luck!
-                </p>
-                <button id="start-btn" class="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-12 rounded-lg text-xl shadow-lg transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-300">
-                    Start Quiz
+            <!-- Choices Container -->
+            <div id="choices-container" class="flex flex-col gap-3">
+                <button class="w-full text-left p-4 bg-gray-100 hover:bg-red-100 border border-gray-300 rounded-lg font-semibold text-gray-800 transition-all duration-200 shadow-sm" onclick="startGame()">
+                    Let's Do This!
                 </button>
             </div>
+        </main>
+    </div>
 
-            <!-- Quiz Screen (Hidden by default) -->
-            <div id="quiz-screen" class="p-8 md:p-12 hidden">
-                <!-- Question Counter -->
-                <div class="mb-4 text-center">
-                    <span id="question-counter" class="text-lg font-semibold text-gray-600"></span>
-                </div>
-                
-                <!-- Question Text -->
-                <h2 id="question-text" class="text-2xl font-bold text-gray-900 mb-8 text-center min-h-[100px]">
-                    <!-- Question will be loaded here -->
-                </h2>
-
-                <!-- Options Container -->
-                <div id="options-container" class="space-y-4">
-                    <!-- Answer buttons will be loaded here -->
-                </div>
-            </div>
-
-            <!-- Results Screen (Hidden by default) -->
-            <div id="results-screen" class="p-8 md:p-12 text-center hidden">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Quiz Complete!</h2>
-                <p id="score-text" class="text-2xl text-gray-600 mb-8">
-                    <!-- Score will be loaded here -->
-                </p>
-                <button id="restart-btn" class="w-full md:w-auto bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-12 rounded-lg text-xl shadow-lg transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-300">
-                    Play Again
-                </button>
-            </div>
-
+    <!-- Outcome/Game Over Modal -->
+    <div id="modal" class="modal invisible opacity-0 fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md text-center">
+            <h2 id="modal-title" class="text-2xl font-bold mb-4">Outcome</h2>
+            <p id="modal-text" class="text-gray-700 mb-6">This is the result of your choice.</p>
+            <button id="modal-button" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-all duration-200">
+                Continue
+            </button>
         </div>
     </div>
 
     <script>
-        // --- QUIZ DATA ---
-        // All 20 questions from our JSON
-        const allQuestions = [
-          {
-            "id": 1,
-            "question": "True or False: Nebraska's victory over Northwestern moved their season record to 6-2.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "True"
-          },
-          {
-            "id": 2,
-            "question": "True or False: This win marks the first time since 2016 that Nebraska has become bowl eligible in the month of October.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "True"
-          },
-          {
-            "id": 3,
-            "question": "True or False: Quarterback Dylan Raiola threw for over 200 yards against the Wildcats.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "False"
-          },
-          {
-            "id": 4,
-            "question": "True or False: The Nebraska offensive line allowed only one sack during the game.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "True"
-          },
-          {
-            "id": 5,
-            "question": "True or False: Emmett Johnson rushed for 124 yards and two touchdowns.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "True"
-          },
-          {
-            "id": 6,
-            "question": "True or False: The Blackshirts defense held Northwestern to under 100 yards rushing.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "False"
-          },
-          {
-            "id": 7,
-            "question": "True or False: Nebraska's defensive line recorded zero sacks against Northwestern.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "True"
-          },
-          {
-            "id": 8,
-            "question": "True or False: Kenneth Williams returned a kickoff for a 95-yard touchdown to start the second half.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "True"
-          },
-          {
-            "id": 9,
-            "question": "True or False: This was Nebraska's second kickoff return touchdown of the season.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "False"
-          },
-          {
-            "id": 10,
-            "question": "True or False: Kicker Kyle Cunanan missed a 44-yard field goal attempt.",
-            "type": "true_false",
-            "options": ["True", "False"],
-            "answer": "True"
-          },
-          {
-            "id": 11,
-            "question": "What was the final score of the Nebraska vs. Northwestern game?",
-            "type": "multiple_choice",
-            "options": [
-              "21-14",
-              "28-21",
-              "35-21",
-              "24-17"
-            ],
-            "answer": "28-21"
-          },
-          {
-            "id": 12,
-            "question": "Who led the Huskers in receiving yards?",
-            "type": "multiple_choice",
-            "options": [
-              "Emmett Johnson",
-              "Isaiah Mozee",
-              "Nyziah Hunter",
-              "Griffin Wilde"
-            ],
-            "answer": "Nyziah Hunter"
-          },
-          {
-            "id": 13,
-            "question": "Emmett Johnson is the first Husker tailback to have four 100-yard rushing games in a season since who?",
-            "type": "multiple_choice",
-            "options": [
-              "Anthony Grant",
-              "JD Spielman",
-              "Caleb Komolafe",
-              "Dylan Raiola"
-            ],
-            "answer": "Anthony Grant"
-          },
-          {
-            "id": 14,
-            "question": "What grade did the article give Nebraska's rushing defense?",
-            "type": "multiple_choice",
-            "options": [
-              "A-",
-              "B+",
-              "C",
-              "D+"
-            ],
-            "answer": "D+"
-          },
-          {
-            "id": 15,
-            "question": "What grade did the article give Nebraska's special teams?",
-            "type": "multiple_choice",
-            "options": [
-              "A",
-              "B-",
-              "C+",
-              "D"
-            ],
-            "answer": "A"
-          },
-          {
-            "id": 16,
-            "question": "Northwestern's longest play was a 56-yard touchdown run by which player?",
-            "type": "multiple_choice",
-            "options": [
-              "Preston Stone",
-              "Griffin Wilde",
-              "Caleb Komolafe",
-              "Emmett Johnson"
-            ],
-            "answer": "Caleb Komolafe"
-          },
-          {
-            "id": 17,
-            "question": "Which two players recorded an interception for the Blackshirts?",
-            "type": "multiple_choice",
-            "options": [
-              "Dasan McCullough and Javin Wright",
-              "Donovan Jones and Javin Wright",
-              "Donovan Jones and Nyziah Hunter",
-              "Javin Wright and Preston Stone"
-            ],
-            "answer": "Donovan Jones and Javin Wright"
-          },
-          {
-            "id": 18,
-            "question": "How many passes did Dylan Raiola complete out of 22 attempts?",
-            "type": "multiple_choice",
-            "options": [
-              "12",
-              "14",
-              "16",
-              "18"
-            ],
-            "answer": "16"
-          },
-          {
-            "id": 19,
-            "question": "Against Minnesota the prior week, how many sacks did the Huskers' offensive line allow?",
-            "type": "multiple_choice",
-            "options": [
-              "One",
-              "Three",
-              "Six",
-              "Nine"
-            ],
-            "answer": "Nine"
-          },
-          {
-            "id": 20,
-            "question": "According to the article, Nebraska's offensive success is \"night and day\" when they lean on whom?",
-            "type": "multiple_choice",
-            "options": [
-              "The offensive line",
-              "Emmett Johnson",
-              "Dylan Raiola",
-              "The special teams unit"
-            ],
-            "answer": "Emmett Johnson"
-          }
-        ];
+        // --- GAME STATE ---
+        let stats = {
+            grades: 5,
+            social: 5,
+            stress: 0,
+            money: 5 // Using a $5 base instead of 3 for more actions
+        };
+        const MAX_STAT = 10;
+        const MAX_MONEY = 20; // Let's give money a higher cap
 
-        // --- DOM Elements ---
-        const startScreen = document.getElementById('start-screen');
-        const quizScreen = document.getElementById('quiz-screen');
-        const resultsScreen = document.getElementById('results-screen');
+        let currentScenarioId = 'start';
+        let nextScenarioId = 'start'; // To hold the next step after the modal
+
+        // --- DOM ELEMENTS ---
+        const gradesBar = document.getElementById('grades-bar');
+        const socialBar = document.getElementById('social-bar');
+        const stressBar = document.getElementById('stress-bar');
+        const moneyBar = document.getElementById('money-bar');
+        const scenarioImage = document.getElementById('scenario-image');
+        const scenarioText = document.getElementById('scenario-text');
+        const choicesContainer = document.getElementById('choices-container');
         
-        const startButton = document.getElementById('start-btn');
-        const restartButton = document.getElementById('restart-btn');
-        
-        const questionCounter = document.getElementById('question-counter');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const scoreText = document.getElementById('score-text');
+        // Modal elements
+        const modal = document.getElementById('modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalButton = document.getElementById('modal-button');
 
-        // --- Quiz State ---
-        let quizQuestions = []; // To store the 5 random questions
-        let currentQuestionIndex = 0;
-        let score = 0;
-        const totalQuestions = 5;
-
-        // --- Event Listeners ---
-        startButton.addEventListener('click', startQuiz);
-        restartButton.addEventListener('click', startQuiz);
-
-        // --- Functions ---
-
-        /**
-         * Starts the quiz: resets state, selects questions, and shows the first question.
-         */
-        function startQuiz() {
-            // Reset state
-            currentQuestionIndex = 0;
-            score = 0;
-            
-            // Select 5 random questions
-            quizQuestions = selectRandomQuestions(allQuestions, totalQuestions);
-            
-            // Swap screens
-            startScreen.classList.add('hidden');
-            resultsScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            
-            // Show the first question
-            showQuestion();
-        }
-
-        /**
-         * Shuffles an array and selects the first 'num' items.
-         * Uses the Fisher-Yates shuffle algorithm.
-         */
-        function selectRandomQuestions(sourceArray, num) {
-            const shuffled = [...sourceArray]; // Create a copy
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        // --- GAME DATA (from your document) ---
+        const scenarios = {
+            'start': {
+                text: "Welcome to your first year at UNL! Try to make it through the semester. If your Grades or Social hit 0, or your Stress hits 10, you're out. Good luck!",
+                image: "https://placehold.co/600x300/c5191e/ffffff?text=Welcome+to+UNL!",
+                choices: [
+                    { text: "Let's do this!", outcome: "Here we go... Your roommate seems... interesting.", next: 'parent_problem', stats: {} }
+                ]
+            },
+            'sexile': {
+                text: "You come back from a late-night study session at Love Library. There's a sock on your door. Your roommate's 'guest' is over, and your chemistry midterm is at 8 AM.",
+                image: "https://placehold.co/600x300/333333/ffffff?text=SOCK+ON+DOOR",
+                choices: [
+                    { text: '(Streetsmart) Text: "You have 10 minutes."', outcome: 'They ignore you, starting a cold war.', next: 'parent_problem', stats: { social: -1, stress: +2 } },
+                    { text: '(Booksmart) Go back to the library.', outcome: 'You\'re exhausted, but you study. You grab a coffee.', next: 'midnight_meltdown', stats: { grades: +1, stress: +2, money: -1 } },
+                    { text: '(Confront) Knock. Loudly. Repeatedly.', outcome: 'Massive public fight! Your RA gets involved.', next: 'cstore_thief', stats: { social: -2, stress: +3, grades: -1 } }
+                ]
+            },
+            'parent_problem': {
+                text: "It's a random Tuesday. You walk into your room, and your roommate's mom is there, unannounced, cleaning. She's commenting on your empty energy drink cans.",
+                image: "https://placehold.co/600x300/4a90e2/ffffff?text=Mom!%3F",
+                choices: [
+                    { text: '(Polite) Grin and bear it. "Nice to meet you!"', outcome: 'She stays for an hour. So awkward, but she leaves $5.', next: 'cstore_thief', stats: { stress: +1, money: +5 } },
+                    { text: '(Passive-Aggressive) "Oh, I would have... hidden my stuff."', outcome: 'Your roommate is now mad at you.', next: 'sexile', stats: { social: -1, stress: +1 } },
+                    { text: '(Boundaries) Pull roommate aside: "This can\'t happen again."', outcome: 'It\'s tense, but they understand.', next: 'ticket_swap', stats: { social: +1, stress: +1 } }
+                ]
+            },
+            'cstore_thief': {
+                text: "Someone on your floor keeps stealing from the communal fridge. This time, it's personal: they ate your slice of Valentino's pizza.",
+                image: "https://placehold.co/600x300/f5a623/ffffff?text=Missing+Pizza",
+                choices: [
+                    { text: '(Public Shaming) Post in the floor group chat.', outcome: 'You look a little unhinged. No one confesses.', next: 'selleck_ghost', stats: { social: -1, stress: +1 } },
+                    { text: '(Vigilante Justice) Buy another slice, lace it with hot sauce.', outcome: 'You hear screaming at 2 AM. Worth it.', next: 'parent_problem', stats: { social: +1, stress: -1, money: -1 } },
+                    { text: '(Authority) Report to the RA.', outcome: 'The RA sighs and gives a speech about community.', next: 'sexile', stats: { stress: +1 } }
+                ]
+            },
+            'ticket_swap': {
+                text: "A friend-of-a-friend begs you for your football ticket for the big game (vs. Iowa). The same day, your crush mentions they'd love to go.",
+                image: "https://placehold.co/600x300/c5191e/ffffff?text=Game+Day+Tickets",
+                choices: [
+                    { text: '(Loyalty) Give it to the friend-of-a-friend.', outcome: 'They\'re grateful, but you missed your shot.', next: 'selleck_ghost', stats: { social: +1 } },
+                    { text: '(Romantic) "Forget" your promise and invite your crush.', outcome: 'You had a great time, but your friend is furious.', next: 'sexile', stats: { social: -1, stress: +1 } },
+                    { text: '(Capitalist) Scalp the ticket.', outcome: 'You made $50, but people find out and call you cheap.', next: 'cstore_thief', stats: { money: +10, social: -2 } } // More money for effect
+                ]
+            },
+            'selleck_ghost': {
+                text: "Your floor is convinced your wing of Selleck Quad is haunted. You're trying to sleep, and you distinctly hear someone whisper your name... but your roommate is gone.",
+                image: "https://placehold.co/600x300/1a1a1a/ffffff?text=...who's+there...%3F",
+                choices: [
+                    { text: '(Investigate) Grab your phone and look.', outcome: 'It was just the wind. You feel silly, but your heart is pounding.', next: 'midnight_meltdown', stats: { stress: +2 } },
+                    { text: '(Denial) Pull covers over head, blast music.', outcome: 'You don\'t sleep well.', next: 'parent_problem', stats: { stress: +1, grades: -1 } },
+                    { text: '(Community) Run into the hall.', outcome: 'Your neighbor is also in the hall, freaked out. You bond over it.', next: 'ticket_swap', stats: { social: +1, stress: -1 } }
+                ]
+            },
+            'midnight_meltdown': {
+                text: "You're in Love Library at 2 AM during finals week. Someone at a nearby table bursts into tears, sobbing about their organic chemistry final. Everyone is staring.",
+                image: "https://placehold.co/600x300/50e3c2/000000?text=Finals+Week",
+                choices: [
+                    { text: '(Empathy) "Hey, let\'s take a walk."', outcome: 'You calmed them down. Good karma, but you lost study time.', next: 'sexile', stats: { social: +1, grades: -1 } },
+                    { text: '(Avoidance) Quietly pack and move floors.', outcome: 'You get your studying done, but feel a little guilty.', next: 'cstore_thief', stats: { grades: +1, stress: +1 } },
+                    { text: '(Authority) Find the student night monitor.', outcome: 'You let someone else handle it. Efficient.', next: 'ticket_swap', stats: {} }
+                ]
+            },
+            'win': {
+                text: "You made it through the semester! You're battered, bruised, and low on sleep, but you survived. Congratulations!",
+                image: "https://placehold.co/600x300/28a745/ffffff?text=You+Survived!",
+                choices: [
+                    { text: 'Play Again?', outcome: '', next: 'start', stats: {} }
+                ]
             }
-            return shuffled.slice(0, num);
+        };
+
+        // --- GAME FUNCTIONS ---
+
+        // Called from the first button
+        function startGame() {
+            stats = { grades: 5, social: 5, stress: 0, money: 5 };
+            // Hide the modal if it's open (from a restart)
+            modal.classList.add('invisible', 'opacity-0');
+            showScenario('start');
         }
 
-        /**
-         * Displays the current question and its options.
-         */
-        function showQuestion() {
-            // Clear previous options
-            optionsContainer.innerHTML = '';
+        // Main function to display a new scenario
+        function showScenario(scenarioId) {
+            currentScenarioId = scenarioId;
+            const scenario = scenarios[scenarioId];
 
-            // Get the current question object
-            const question = quizQuestions[currentQuestionIndex];
-            
+            if (!scenario) {
+                console.error("Scenario not found:", scenarioId);
+                return;
+            }
+
             // Update UI
-            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
-            questionText.textContent = question.question;
-            
-            // Create and append answer buttons
-            question.options.forEach(option => {
+            scenarioText.textContent = scenario.text;
+            scenarioImage.src = scenario.image;
+
+            // Clear old choices
+            choicesContainer.innerHTML = '';
+
+            // Create new choice buttons
+            scenario.choices.forEach(choice => {
                 const button = document.createElement('button');
-                button.textContent = option;
-                button.classList.add('answer-btn');
-                button.addEventListener('click', () => selectAnswer(option));
-                optionsContainer.appendChild(button);
+                button.className = "w-full text-left p-4 bg-gray-100 hover:bg-red-100 border border-gray-300 rounded-lg font-semibold text-gray-800 transition-all duration-200 shadow-sm";
+                button.textContent = choice.text;
+                
+                // Add click listener to select the choice
+                button.onclick = () => selectChoice(choice);
+                choicesContainer.appendChild(button);
             });
+
+            // Update stats UI *after* loading scenario (for restarts)
+            updateStatsUI();
         }
 
-        /**
-         * Handles the user's answer selection.
-         */
-        function selectAnswer(selectedOption) {
-            const correctAnswer = quizQuestions[currentQuestionIndex].answer;
-            
-            // Check if the answer is correct
-            if (selectedOption === correctAnswer) {
-                score++;
+        // Called when a choice button is clicked
+        function selectChoice(choice) {
+            // Apply stat changes
+            stats.grades += choice.stats.grades || 0;
+            stats.social += choice.stats.social || 0;
+            stats.stress += choice.stats.stress || 0;
+            stats.money += choice.stats.money || 0;
+
+            // Clamp stats to 0-10 range (or 0-MAX_MONEY)
+            stats.grades = Math.max(0, Math.min(MAX_STAT, stats.grades));
+            stats.social = Math.max(0, Math.min(MAX_STAT, stats.social));
+            stats.stress = Math.max(0, Math.min(MAX_STAT, stats.stress));
+            stats.money = Math.max(0, Math.min(MAX_MONEY, stats.money));
+
+            // Update the UI
+            updateStatsUI();
+
+            // Check for game over conditions
+            if (stats.stress >= MAX_STAT) {
+                showGameOver("MELTDOWN! You're on academic probation due to extreme stress. Game Over.");
+                return;
             }
-            
-            // Move to the next question or show results
-            currentQuestionIndex++;
-            if (currentQuestionIndex < totalQuestions) {
-                showQuestion();
-            } else {
-                showResults();
+            if (stats.grades <= 0) {
+                showGameOver("YOU FAILED! You failed all your classes and are on academic probation. Game Over.");
+                return;
+            }
+            if (stats.social <= 0) {
+                showGameOver("OUTCAST! You've alienated everyone. It's a lonely year. Game Over.");
+                return;
+            }
+            if (stats.money < 0) {
+                // Let's make $0 a loss condition too
+                stats.money = 0;
+                updateStatsUI();
+                showGameOver("BROKE! You've run out of money for laundry and food. Game Over.");
+                return;
+            }
+
+            // Show outcome in modal
+            // Handle the special 'start' and 'win' cases
+            if (currentScenarioId === 'start' && choice.next === 'start') {
+                // This is a restart
+                startGame();
+            } else if (currentScenarioId === 'win') {
+                startGame();
+            }
+            else {
+                // Normal choice outcome
+                nextScenarioId = choice.next;
+                showMessage(choice.outcome);
             }
         }
 
-        /**
-         * Displays the final score and results screen.
-         */
-        function showResults() {
-            // Swap screens
-            quizScreen.classList.add('hidden');
-            resultsScreen.classList.remove('hidden');
+        // Update the stat bar visuals
+        function updateStatsUI() {
+            gradesBar.style.width = `${(stats.grades / MAX_STAT) * 100}%`;
+            gradesBar.textContent = `${stats.grades}/${MAX_STAT}`;
             
-            // Display score
-            scoreText.textContent = `You scored ${score} out of ${totalQuestions}!`;
+            socialBar.style.width = `${(stats.social / MAX_STAT) * 100}%`;
+            socialBar.textContent = `${stats.social}/${MAX_STAT}`;
+            
+            stressBar.style.width = `${(stats.stress / MAX_STAT) * 100}%`;
+            stressBar.textContent = `${stats.stress}/${MAX_STAT}`;
+            
+            moneyBar.style.width = `${(stats.money / MAX_MONEY) * 100}%`;
+            moneyBar.textContent = `$${stats.money}`;
         }
+
+        // --- MODAL FUNCTIONS ---
+
+        // Show a message for a normal choice outcome
+        function showMessage(message) {
+            modalTitle.textContent = "Outcome";
+            modalText.textContent = message;
+            modalButton.textContent = "Continue...";
+            
+            // Set up the button to load the next scenario
+            modalButton.onclick = () => {
+                modal.classList.add('invisible', 'opacity-0');
+                // Pick a random scenario if the 'next' one isn't found
+                // This makes the game more replayable
+                let next = scenarios[nextScenarioId] ? nextScenarioId : getRandomScenarioId();
+                showScenario(next);
+            };
+
+            modal.classList.remove('invisible', 'opacity-0');
+        }
+
+        // Show a game over message
+        function showGameOver(message) {
+            modalTitle.textContent = "Game Over";
+            modalText.textContent = message;
+            modalButton.textContent = "Restart Game";
+            
+            // Set up the button to restart the game
+            modalButton.onclick = () => {
+                startGame(); 
+            };
+            
+            modal.classList.remove('invisible', 'opacity-0');
+        }
+
+        function getRandomScenarioId() {
+            const keys = Object.keys(scenarios).filter(key => key !== 'start' && key !== 'win' && key !== currentScenarioId);
+            return keys[Math.floor(Math.random() * keys.length)];
+        }
+        
+        // Initial UI update on load
+        updateStatsUI();
 
     </script>
 </body>
