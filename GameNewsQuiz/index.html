@@ -1,221 +1,99 @@
-{
-  "start": {
-    "text": "Welcome to your first year at UNL! Try to make it through the semester. If your Grades or Social hit 0, or your Stress hits 10, you're out. Good luck!",
-    "image": "https://placehold.co/600x300/c5191e/ffffff?text=Welcome+to+UNL!",
-    "choices": [
-      {
-        "text": "Let's do this!",
-        "outcome": "Here we go... Your roommate seems... interesting.",
-        "next": "parent_problem",
-        "stats": {}
-      }
-    ]
-  },
-  "sexile": {
-    "text": "You come back from a late-night study session at Love Library. There's a sock on your door. Your roommate's 'guest' is over, and your chemistry midterm is at 8 AM.",
-    "image": "https://placehold.co/600x300/333333/ffffff?text=SOCK+ON+DOOR",
-    "choices": [
-      {
-        "text": "(Streetsmart) Text: \"You have 10 minutes.\"",
-        "outcome": "They ignore you, starting a cold war.",
-        "next": "parent_problem",
-        "stats": {
-          "social": -1,
-          "stress": 2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DN Deadline Dash</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
         }
-      },
-      {
-        "text": "(Booksmart) Go back to the library.",
-        "outcome": "You're exhausted, but you study. You grab a coffee.",
-        "next": "midnight_meltdown",
-        "stats": {
-          "grades": 1,
-          "stress": 2,
-          "money": -1
+        #game-container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 5px solid #d00000; /* Daily Nebraskan Red */
+            padding: 24px;
+            box-sizing: border-box;
         }
-      },
-      {
-        "text": "(Confront) Knock. Loudly. Repeatedly.",
-        "outcome": "Massive public fight! Your RA gets involved.",
-        "next": "cstore_thief",
-        "stats": {
-          "social": -2,
-          "stress": 3,
-          "grades": -1
+        h1 {
+            font-size: 1.8em;
+            text-align: center;
+            color: #333;
+            margin-top: 0;
         }
-      }
-    ]
-  },
-  "parent_problem": {
-    "text": "It's a random Tuesday. You walk into your room, and your roommate's mom is there, unannounced, cleaning. She's commenting on your empty energy drink cans.",
-    "image": "https://placehold.co/600x300/4a90e2/ffffff?text=Mom!%3F",
-    "choices": [
-      {
-        "text": "(Polite) Grin and bear it. \"Nice to meet you!\"",
-        "outcome": "She stays for an hour. So awkward, but she leaves $5.",
-        "next": "cstore_thief",
-        "stats": {
-          "stress": 1,
-          "money": 5
+        #stats-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 16px 0;
         }
-      },
-      {
-        "text": "(Passive-Aggressive) \"Oh, I would have... hidden my stuff.\"",
-        "outcome": "Your roommate is now mad at you.",
-        "next": "sexile",
-        "stats": {
-          "social": -1,
-          "stress": 1
+        .stat {
+            font-size: 1.1em;
+            font-weight: bold;
         }
-      },
-      {
-        "text": "(Boundaries) Pull roommate aside: \"This can't happen again.\"",
-        "outcome": "It's tense, but they understand.",
-        "next": "ticket_swap",
-        "stats": {
-          "social": 1,
-          "stress": 1
+        #scenario-text {
+            font-size: 1.1em;
+            margin-bottom: 20px;
         }
-      }
-    ]
-  },
-  "cstore_thief": {
-    "text": "Someone on your floor keeps stealing from the communal fridge. This time, it's personal: they ate your slice of Valentino's pizza.",
-    "image": "https://placehold.co/600x300/f5a623/ffffff?text=Missing+Pizza",
-    "choices": [
-      {
-        "text": "(Public Shaming) Post in the floor group chat.",
-        "outcome": "You look a little unhinged. No one confesses.",
-        "next": "selleck_ghost",
-        "stats": {
-          "social": -1,
-          "stress": 1
+        #choices-container {
+            display: grid;
+            gap: 10px;
         }
-      },
-      {
-        "text": "(Vigilante Justice) Buy another slice, lace it with hot sauce.",
-        "outcome": "You hear screaming at 2 AM. Worth it.",
-        "next": "parent_problem",
-        "stats": {
-          "social": 1,
-          "stress": -1,
-          "money": -1
+        .choice-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            font-size: 1em;
+            font-weight: 600;
+            text-align: left;
+            background-color: #fff;
+            color: #d00000;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
         }
-      },
-      {
-        "text": "(Authority) Report to the RA.",
-        "outcome": "The RA sighs and gives a speech about community.",
-        "next": "sexile",
-        "stats": {
-          "stress": 1
+        .choice-btn:hover {
+            background-color: #fdf0f0;
+            border-color: #d00000;
         }
-      }
-    ]
-  },
-  "ticket_swap": {
-    "text": "A friend-of-a-friend begs you for your football ticket for the big game (vs. Iowa). The same day, your crush mentions they'd love to go.",
-    "image": "https://placehold.co/600x300/c5191e/ffffff?text=Game+Day+Tickets",
-    "choices": [
-      {
-        "text": "(Loyalty) Give it to the friend-of-a-friend.",
-        "outcome": "They're grateful, but you missed your shot.",
-        "next": "selleck_ghost",
-        "stats": {
-          "social": 1
-        }
-      },
-      {
-        "text": "(Romantic) \"Forget\" your promise and invite your crush.",
-        "outcome": "You had a great time, but your friend is furious.",
-        "next": "sexile",
-        "stats": {
-          "social": -1,
-          "stress": 1
-        }
-      },
-      {
-        "text": "(Capitalist) Scalp the ticket.",
-        "outcome": "You made $50, but people find out and call you cheap.",
-        "next": "cstore_thief",
-        "stats": {
-          "money": 10,
-          "social": -2
-        }
-      }
-    ]
-  },
-  "selleck_ghost": {
-    "text": "Your floor is convinced your wing of Selleck Quad is haunted. You're trying to sleep, and you distinctly hear someone whisper your name... but your roommate is gone.",
-    "image": "https://placehold.co/600x300/1a1a1a/ffffff?text=...who's+there...%3F",
-    "choices": [
-      {
-        "text": "(Investigate) Grab your phone and look.",
-        "outcome": "It was just the wind. You feel silly, but your heart is pounding.",
-        "next": "midnight_meltdown",
-        "stats": {
-          "stress": 2
-        }
-      },
-      {
-        "text": "(Denial) Pull covers over head, blast music.",
-        "outcome": "You don't sleep well.",
-        "next": "parent_problem",
-        "stats": {
-          "stress": 1,
-          "grades": -1
-        }
-      },
-      {
-        "text": "(Community) Run into the hall.",
-        "outcome": "Your neighbor is also in the hall, freaked out. You bond over it.",
-        "next": "ticket_swap",
-        "stats": {
-          "social": 1,
-          "stress": -1
-        }
-      }
-    ]
-  },
-  "midnight_meltdown": {
-    "text": "You're in Love Library at 2 AM during finals week. Someone at a nearby table bursts into tears, sobbing about their organic chemistry final. Everyone is staring.",
-    "image": "https://placehold.co/600x300/50e3c2/000000?text=Finals+Week",
-    "choices": [
-      {
-        "text": "(Empathy) \"Hey, let's take a walk.\"",
-        "outcome": "You calmed them down. Good karma, but you lost study time.",
-        "next": "sexile",
-        "stats": {
-          "social": 1,
-          "grades": -1
-        }
-      },
-      {
-        "text": "(Avoidance) Quietly pack and move floors.",
-        "outcome": "You get your studying done, but feel a little guilty.",
-        "next": "cstore_thief",
-        "stats": {
-          "grades": 1,
-          "stress": 1
-        }
-      },
-      {
-        "text": "(Authority) Find the student night monitor.",
-        "outcome": "You let someone else handle it. Efficient.",
-        "next": "ticket_swap",
-        "stats": {}
-      }
-    ]
-  },
-  "win": {
-    "text": "You made it through the semester! You're battered, bruised, and low on sleep, but you survived. Congratulations!",
-    "image": "https://placehold.co/600x300/28a745/ffffff?text=You+Survived!",
-    "choices": [
-      {
-        "text": "Play Again?",
-        "outcome": "",
-        "next": "start",
-        "stats": {}
-      }
-    ]
-  }
-}
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <h1>📰 DN Deadline Dash</h1>
+        
+        <div id="instructions">
+            <h3>Welcome to the Daily Nebraskan!</h3>
+            <p>You're a reporter, and a big story just broke. Your goal is to get the scoop before the deadline.</p>
+            <p><strong>To Win:</strong> Get <strong>5 Story Quality</strong> points before time runs out!</p>
+            <p><strong>To Lose:</strong> Run out of time or publish a story with less than 5 Quality points.</p>
+            <button id="start-btn" class="choice-btn" style="text-align: center;">Start Reporting</button>
+        </div>
+
+        <div id="game-area" style="display: none;">
+            <div id="stats-container">
+                <div class="stat" id="time-stat">Time Left: 5</div>
+                <div class="stat" id="quality-stat">Story Quality: 0</div>
+            </div>
+            <p id="scenario-text"></p>
+            <div id="choices-container"></div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+{
+  "initialState": {
+    "time": 5,
+    "quality": 0
+  },
+  "scenes": [
+    {
+      "id": "START",
+      "text": "You're in the DN office in the Nebraska Union. Your editor waves you over. 'Big crowd outside Love Library. Could be a protest, could be a flash mob. Go! You've got 5 hours.' What's your first move?",
+      "choices": [
+        {
+          "text": "Head straight to Love Library to see the crowd.",
+          "nextScene": "LOVE_LIBRARY_CROWD",
+          "effects": { "time": -1, "quality": 0 }
+        },
+        {
+          "text": "First, call your contact at UNL Police.",
+          "nextScene": "CALL_UNLPD",
+          "effects": { "time": -1, "quality": +1 }
+        },
+        {
+          "text": "Check social media (Yik Yak, Twitter) first.",
+          "nextScene": "CHECK_SOCIAL",
+          "effects": { "time": -1, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "CALL_UNLPD",
+      "text": "You call Officer Barta. 'Yeah, we've heard,' she says. 'It's a student group protesting the new dining hall menu changes. Seems peaceful.' This is good background info.",
+      "choices": [
+        {
+          "text": "Great. Now head to Love Library to get quotes.",
+          "nextScene": "LOVE_LIBRARY_CROWD",
+          "effects": { "time": -1, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "CHECK_SOCIAL",
+      "text": "You scroll Yik Yak. It's mostly jokes and vague posts ('What's happening at Love?'). You waste an hour and find no real information.",
+      "choices": [
+        {
+          "text": "Ugh. Okay, now I'll go to Love Library.",
+          "nextScene": "LOVE_LIBRARY_CROWD",
+          "effects": { "time": -1, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "LOVE_LIBRARY_CROWD",
+      "text": "You arrive at Love Library. There are about 50 students chanting and holding signs. One person with a megaphone seems to be the leader.",
+      "choices": [
+        {
+          "text": "Interview the student with the megaphone.",
+          "nextScene": "INTERVIEW_LEADER",
+          "effects": { "time": -1, "quality": +2 }
+        },
+        {
+          "text": "Interview a random student in the crowd.",
+          "nextScene": "INTERVIEW_STUDENT",
+          "effects": { "time": -1, "quality": +1 }
+        },
+        {
+          "text": "Take some photos and head back to write.",
+          "nextScene": "WRITE_NOW",
+          "effects": { "time": -1, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "INTERVIEW_LEADER",
+      "text": "You talk to the leader, Jane. She gives you a passionate, well-sourced quote about rising costs and poor food quality. 'We're not leaving until we speak to administration!' she says. This is solid gold.",
+      "choices": [
+        {
+          "text": "This is enough. Head back to the office to write.",
+          "nextScene": "WRITE_NOW",
+          "effects": { "time": -1, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "INTERVIEW_STUDENT",
+      "text": "You grab a student nearby. 'I'm just here 'cuz my friend is,' he says. 'I think it's about... the food? I just want a picture for my Insta.' It's *a* quote, but not a great one.",
+      "choices": [
+        {
+          "text": "Okay, that was useless. I better go talk to the leader.",
+          "nextScene": "INTERVIEW_LEADER",
+          "effects": { "time": -1, "quality": 0 }
+        },
+        {
+          "text": "Good enough. Head back to write.",
+          "nextScene": "WRITE_NOW",
+          "effects": { "time": -1, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "WRITE_NOW",
+      "text": "You're back in the newsroom. You look at the clock and your notes. It's time to publish.",
+      "choices": [
+        {
+          "text": "Publish the story!",
+          "nextScene": "FINAL_CHECK",
+          "effects": { "time": 0, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "FINAL_CHECK",
+      "text": "This is a special scene that checks your final score.",
+      "choices": []
+    },
+    {
+      "id": "WIN",
+      "text": "You did it! Your story is fantastic, well-sourced, and on the front page before the deadline. Your editor is thrilled. You're a true Daily Nebraskan!",
+      "choices": [
+        {
+          "text": "Play Again",
+          "nextScene": "RESTART",
+          "effects": { "time": 0, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "LOSE_QUALITY",
+      "text": "You published the story, but... it's weak. It's missing key sources and quotes. It gets buried on page 6. Your editor tells you 'better luck next time.'",
+      "choices": [
+        {
+          "text": "Try Again",
+          "nextScene": "RESTART",
+          "effects": { "time": 0, "quality": 0 }
+        }
+      ]
+    },
+    {
+      "id": "LOSE_TIME",
+      "text": "The 6:00 PM deadline passes. You ran out of time! The story is old news, and the paper goes to print without your article. A rival paper got the scoop.",
+      "choices": [
+        {
+          "text": "Try Again",
+          "nextScene": "RESTART",
+          "effects": { "time": 0, "quality": 0 }
+        }
+      ]
+    }
+  ]
+}
